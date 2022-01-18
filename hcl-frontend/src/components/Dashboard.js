@@ -4,8 +4,7 @@ import ProjectItem from './project/ProjectItem';
 
 function Dashboard() {
     return (
-        <div className='dashboard'>
-            <Header/>
+        <div className='alert alert-warning'>
             <h1>Welcome to the Dashboard</h1>
             <ProjectItem/>
             <ProjectItem/>
