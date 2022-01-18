@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ProjectItem() {
+const ProjectItem = () => {
     return (
         <div className="container">
                         <div className="card card-body bg-light mb-3">

@@ -1,8 +1,9 @@
 import React from 'react'
 import Header from './layout/Header';
+import CreateProjectButton from './project/CreateProjectButton';
 import ProjectItem from './project/ProjectItem';
 
-function Dashboard() {
+const Dashboard = () => {
     return (
         <div className="projects">
         <div className="container">
@@ -10,9 +11,7 @@ function Dashboard() {
                 <div className="col-md-12">
                     <h1 className="display-4 text-center">Projects</h1>
                     <br />
-                    <a href="ProjectForm.html" className="btn btn-lg btn-info">
-                        Create a Project
-                    </a>
+                    <CreateProjectButton/>
                     <br />
                     <hr />
                     
