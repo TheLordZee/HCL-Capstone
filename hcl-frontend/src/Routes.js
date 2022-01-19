@@ -4,6 +4,7 @@ import {Route} from "react-router-dom";
 import Dashboard from './components/Dashboard';
 import Header from './components/layout/Header';
 import AddProject from './components/project/AddProject';
+import UpdateProject from './components/project/UpdateProject';
 
 const Routes = () => {
     const history = useHistory();
@@ -16,6 +17,9 @@ const Routes = () => {
             </Route>
             <Route exact path="/addProject">
                 <AddProject history={history}/>
+            </Route>
+            <Route exact path="/updateProject/:id">
+                <UpdateProject history={history}/>
             </Route>
         </div>    
         </>

@@ -12,7 +12,6 @@ const Dashboard = ({project, getProjects}) => {
     }, []);
 
     const {projects} = project;
-    console.log(projects)
     return (
         <div className="projects">
         <div className="container">
@@ -29,8 +28,6 @@ const Dashboard = ({project, getProjects}) => {
                             project={p}
                         />
                     })}
-                   
-
                 </div>
             </div>
         </div>
