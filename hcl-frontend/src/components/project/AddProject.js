@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {connect} from "react-redux";
 import { createProject } from '../../actions/projectActions';
 import PropTypes  from 'prop-types';
 
-const AddProject = ({createProject, history}) => {
+const AddProject = ({createProject, history, errors}) => {
     const INIT_DATA={
         projectName: "",
         projectIdentifier: "",
         description: "",
         startDate: "",
-        endDate: ""
+        endDate: "",
     }
+    const [currErrors, setCurrErrors] = useState({})
     const [formData, setFormData] = useState(INIT_DATA);
+    console.log(currErrors)
+    useEffect(() => {
+        if(errors){
+            console.log(errors)
+            setCurrErrors ({
+               errors: errors
+            })
+        }
+    }, [errors])
 
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -30,6 +40,7 @@ const AddProject = ({createProject, history}) => {
     }
     return (
         <div>
+        
             <div className="project">
         <div className="container">
             <div className="row">
@@ -46,6 +57,8 @@ const AddProject = ({createProject, history}) => {
                                 value={formData.projectName}
                                 onChange={onChange}
                             />
+                            {(currErrors.errors) ? <p>{currErrors.errors.projectName}</p> : <></>}
+                            
                         </div>
                         <div className="form-group">
                             <input 
@@ -56,6 +69,7 @@ const AddProject = ({createProject, history}) => {
                                 value={formData.projectIdentifier}
                                 onChange={onChange}
                             />
+                            {(currErrors.errors) ? <p>{currErrors.errors.projectIdentifier}</p> : <></>}
                         </div>
                         {/* <!-- disabled for Edit Only!! remove "disabled" for the Create operation --> */}
                         <div className="form-group">
@@ -66,6 +80,7 @@ const AddProject = ({createProject, history}) => {
                                 value={formData.description}
                                 onChange={onChange}
                             ></textarea>
+                            {(currErrors.errors) ? <p>{currErrors.errors.description}</p> : <></>}
                         </div>
                         <h6>Start Date</h6>
                         <div className="form-group">
@@ -100,7 +115,15 @@ const AddProject = ({createProject, history}) => {
 }
 
 AddProject.propTypes = {
-    createProject : PropTypes.func.isRequired
+    createProject : PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
-export default connect(null, {createProject})(AddProject);
+const mapStateToProps = state => ({
+    errors: state.errors
+})
+
+export default connect(
+    mapStateToProps, 
+    {createProject}
+    )(AddProject);
