@@ -1,7 +1,9 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
+import {connect} from "react-redux";
+import { createProject } from '../../actions/projectActions';
+import PropTypes  from 'prop-types';
 
-const AddProject = () => {
+const AddProject = ({createProject, history}) => {
     const INIT_DATA={
         projectName: "",
         projectIdentifier: "",
@@ -23,6 +25,8 @@ const AddProject = () => {
         e.preventDefault();
         const newProject = formData;
         console.log(newProject);
+
+        createProject(newProject, history);
     }
     return (
         <div>
@@ -95,4 +99,8 @@ const AddProject = () => {
     )
 }
 
-export default AddProject;
+AddProject.propTypes = {
+    createProject : PropTypes.func.isRequired
+}
+
+export default connect(null, {createProject})(AddProject);

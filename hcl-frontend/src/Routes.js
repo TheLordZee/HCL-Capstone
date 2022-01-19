@@ -1,10 +1,12 @@
 import React from 'react'
+import { useHistory } from 'react-router';
 import {Route} from "react-router-dom";
 import Dashboard from './components/Dashboard';
 import Header from './components/layout/Header';
 import AddProject from './components/project/AddProject';
 
 const Routes = () => {
+    const history = useHistory();
     return (
         <>
         <Header/>
@@ -13,7 +15,7 @@ const Routes = () => {
                 <Dashboard />
             </Route>
             <Route exact path="/addProject">
-                <AddProject />
+                <AddProject history={history}/>
             </Route>
         </div>    
         </>
