@@ -16,7 +16,7 @@ const UpdateProject = ({getProject, createProject, project, history, errors}) =>
     }, [])
 
     useEffect(() => {
-        setCurrProject(project.project)
+        setCurrProject(project)
     }, [project])
 
     useEffect(() => {
@@ -126,7 +126,7 @@ UpdateProject.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    project:state.project,
+    project:state.project.project,
     errors:state.errors
 })
 
