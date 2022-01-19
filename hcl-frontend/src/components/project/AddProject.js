@@ -14,10 +14,8 @@ const AddProject = ({createProject, history, errors}) => {
     }
     const [currErrors, setCurrErrors] = useState({})
     const [formData, setFormData] = useState(INIT_DATA);
-    console.log(currErrors)
     useEffect(() => {
         if(errors){
-            console.log(errors)
             setCurrErrors (errors)
         }
     }, [errors])
