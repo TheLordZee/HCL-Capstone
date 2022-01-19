@@ -11,6 +11,8 @@ const Dashboard = ({project, getProjects}) => {
         getProjects();
     }, []);
 
+    const {projects} = project;
+    console.log(projects)
     return (
         <div className="projects">
         <div className="container">
@@ -21,10 +23,13 @@ const Dashboard = ({project, getProjects}) => {
                     <CreateProjectButton/>
                     <br />
                     <hr />
-                    
-                   <ProjectItem/>
-                   <ProjectItem/>
-                   <ProjectItem/>
+                    {projects.map(p => {
+                        return <ProjectItem 
+                            key={p.id} 
+                            project={p}
+                        />
+                    })}
+                   
 
                 </div>
             </div>
