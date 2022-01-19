@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
+import { getProject } from '../../actions/projectActions';
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import classnames from 'classnames';
 
-const UpdateProject = () => {
+const UpdateProject = ({getProject, project, history, errors}) => {
     const {id} = useParams();
+
+    useEffect(() => {
+        getProject(id, history);
+    }, [])
+    const [currProject, setCurrProject] = useState({})
+    useEffect(() => {
+        setCurrProject(project.project)
+    }, [project])
+
+    console.log(currProject)
     return (
         <div className="project">
         <div className="container">
@@ -36,4 +50,15 @@ const UpdateProject = () => {
     )
 }
 
-export default UpdateProject
+UpdateProject.propTypes = {
+    getProject: PropTypes.func.isRequired,
+    project: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    project:state.project,
+    errors:state.errors
+})
+
+export default connect(mapStateToProps, {getProject}) (UpdateProject)
