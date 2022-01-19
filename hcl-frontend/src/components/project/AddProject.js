@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {connect} from "react-redux";
 import { createProject } from '../../actions/projectActions';
 import PropTypes  from 'prop-types';
+import classnames from "classnames";
 
 const AddProject = ({createProject, history, errors}) => {
     const INIT_DATA={
@@ -17,9 +18,7 @@ const AddProject = ({createProject, history, errors}) => {
     useEffect(() => {
         if(errors){
             console.log(errors)
-            setCurrErrors ({
-               errors: errors
-            })
+            setCurrErrors (errors)
         }
     }, [errors])
 
@@ -51,36 +50,48 @@ const AddProject = ({createProject, history, errors}) => {
                         <div className="form-group">
                             <input 
                                 type="text" 
-                                className="form-control form-control-lg " 
+                                className={classnames("form-control form-control-lg ",{
+                                    "is-invalid":currErrors.projectName
+                                })} 
                                 placeholder="Project Name" 
                                 name='projectName'  
                                 value={formData.projectName}
                                 onChange={onChange}
                             />
-                            {(currErrors.errors) ? <p>{currErrors.errors.projectName}</p> : <></>}
-                            
+                            {currErrors.projectName && (
+                                <div className="invalid-feedback">{currErrors.projectName}</div>
+                            )}
+
                         </div>
                         <div className="form-group">
                             <input 
                                 type="text" 
-                                className="form-control form-control-lg" 
+                                className={classnames("form-control form-control-lg ",{
+                                    "is-invalid":currErrors.projectIdentifier
+                                })}
                                 placeholder="Unique Project ID"
                                 name="projectIdentifier"
                                 value={formData.projectIdentifier}
                                 onChange={onChange}
                             />
-                            {(currErrors.errors) ? <p>{currErrors.errors.projectIdentifier}</p> : <></>}
+                            {currErrors.projectIdentifier && (
+                                <div className="invalid-feedback">{currErrors.projectIdentifier}</div>
+                            )}                        
                         </div>
-                        {/* <!-- disabled for Edit Only!! remove "disabled" for the Create operation --> */}
+                        
                         <div className="form-group">
                             <textarea 
-                                className="form-control form-control-lg" 
+                                className={classnames("form-control form-control-lg ",{
+                                    "is-invalid":currErrors.description
+                                })}
                                 placeholder="Project Description"
                                 name="description"
                                 value={formData.description}
                                 onChange={onChange}
                             ></textarea>
-                            {(currErrors.errors) ? <p>{currErrors.errors.description}</p> : <></>}
+                            {currErrors.description && (
+                                <div className="invalid-feedback">{currErrors.description}</div>
+                            )}                        
                         </div>
                         <h6>Start Date</h6>
                         <div className="form-group">
