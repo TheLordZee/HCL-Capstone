@@ -1,5 +1,7 @@
 package com.hcl.project.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +39,10 @@ public class ProjectTaskService {
 		
 		return projectTaskRepository.save(pt);
 	}
+
+	public Iterable<ProjectTask> findBackLogById(String backlog_id) {
+		// TODO Auto-generated method stub
+		return projectTaskRepository.findByProjectIdentifierOrderByPriority(backlog_id);
+	}
+	 
 }
