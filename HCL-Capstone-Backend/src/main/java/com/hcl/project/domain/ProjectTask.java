@@ -20,7 +20,6 @@ public class ProjectTask {
 	
 	@Column(updatable = false)
 	private String projectIdentifier;
-	
 	private Date createdAt;
 	private Date updatedAt;
 	
