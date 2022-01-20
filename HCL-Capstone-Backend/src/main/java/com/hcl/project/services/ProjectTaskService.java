@@ -21,12 +21,16 @@ public class ProjectTaskService {
 		Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
 		pt.setBacklog(backlog);
 		int btSeq = backlog.getPTSequence() + 1;
+		
+		backlog.setPTSequence(btSeq);
+		
 		pt.setProjectSequence(projectIdentifier + "-" + btSeq);
 		pt.setProjectIdentifier(projectIdentifier);
 		
-//		if(pt.getPriority()==0) {
-//			pt.setPriority(3);
-//		}
+		
+		if(pt.getPriority()==0) {
+			pt.setPriority(3);
+		}
 		if(pt.getStatus()=="" || pt.getStatus()==null) {
 			pt.setStatus("TO_DO");
 		}
