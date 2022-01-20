@@ -17,7 +17,7 @@ public class ProjectTask {
 	private String summary;
 	private String acceptanceCriteria;
 	private String status;
-	private int priority;
+	private int priority = 0;
 	private Date dueDate;
 	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.REFRESH)
