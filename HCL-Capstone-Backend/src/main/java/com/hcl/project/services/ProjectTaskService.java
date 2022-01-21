@@ -10,6 +10,7 @@ import com.hcl.project.domain.Project;
 import com.hcl.project.domain.ProjectTask;
 import com.hcl.project.exceptions.ProjectIdException;
 import com.hcl.project.exceptions.ProjectNotFoundException;
+import com.hcl.project.exceptions.ProjectSequenceUpdateException;
 import com.hcl.project.repositories.BacklogRepository;
 import com.hcl.project.repositories.ProjectRepository;
 import com.hcl.project.repositories.ProjectTaskRepository;
@@ -80,15 +81,19 @@ public class ProjectTaskService {
 	}
 	
 	public ProjectTask updateProjectTask(ProjectTask updatedTask, String pt_id, String backlog_id) {
-		try {
-			Backlog backlog = backlogRepository.findByProjectIdentifier(backlog_id);
-			if(!updatedTask.getProjectSequence().equals(pt_id)) {
-				
-			}
-			return projectTaskRepository.save(updatedTask);
-		}catch(Exception e) {
-			System.out.println(e.getMessage());
-			return null;
+		ProjectTask pt = findPTbyProjectSequence(backlog_id, pt_id);
+		if(!updatedTask.getProjectSequence().equals(pt_id)) {
+			throw new ProjectSequenceUpdateException("You are not allowed to change the project sequence!");
 		}
+		return projectTaskRepository.save(updatedTask);
+	}
+	
+	public void deleteProjectTask(String backlog_id, String pt_id) {
+		ProjectTask pt = findPTbyProjectSequence(backlog_id, pt_id);
+		Backlog bl = pt.getBacklog();
+		List<ProjectTask> pts = bl.getProjectTasks();
+		pts.remove(pt);
+		backlogRepository.save(bl);
+		projectTaskRepository.delete(pt);
 	}
 }
