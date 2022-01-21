@@ -65,7 +65,16 @@ public class ProjectTaskService {
 	}
 	 
 	public ProjectTask findPTbyProjectSequence(String backlog_id, String pt_id) {
+		ProjectTask pt = projectTaskRepository.findByProjectSequence(pt_id);
 		
-		return projectTaskRepository.findByProjectSequence(pt_id);
+		if(pt == null) {
+			throw new ProjectNotFoundException("Project Task With ID: '" + pt_id+"' Not Found");
+		}
+		
+		if(!pt.getProjectIdentifier().equals(backlog_id)) {
+			throw new ProjectNotFoundException("Invalid Project ID: '" + backlog_id);
+		}
+		
+		return pt;
 	}
 }
