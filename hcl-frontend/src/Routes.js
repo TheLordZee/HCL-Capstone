@@ -5,6 +5,8 @@ import Dashboard from './components/Dashboard';
 import Header from './components/layout/Header';
 import AddProject from './components/project/AddProject';
 import UpdateProject from './components/project/UpdateProject';
+import ProjectBoard from './components/ProjectBoard/ProjectBoard';
+import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTask';
 
 const Routes = () => {
     const history = useHistory();
@@ -20,6 +22,12 @@ const Routes = () => {
             </Route>
             <Route exact path="/updateProject/:id">
                 <UpdateProject history={history}/>
+            </Route>
+            <Route exact path="/projectBoard/:id">
+                <ProjectBoard/>
+            </Route>
+            <Route exact path="/addProjectTask/:id">
+                <AddProjectTask/>
             </Route>
         </div>    
         </>
