@@ -36,14 +36,15 @@ public class ProjectTaskService {
 			
 			pt.setProjectSequence(projectIdentifier + "-" + btSeq);
 			pt.setProjectIdentifier(projectIdentifier);
-			
-			
+				
 			if(pt.getPriority()==0) {
 				pt.setPriority(3);
 			}
+				
 			if(pt.getStatus()=="" || pt.getStatus()==null) {
 				pt.setStatus("TO_DO");
 			}
+			
 			
 			return projectTaskRepository.save(pt);
 
@@ -76,5 +77,18 @@ public class ProjectTaskService {
 		}
 		
 		return pt;
+	}
+	
+	public ProjectTask updateProjectTask(ProjectTask updatedTask, String pt_id, String backlog_id) {
+		try {
+			Backlog backlog = backlogRepository.findByProjectIdentifier(backlog_id);
+			if(!updatedTask.getProjectSequence().equals(pt_id)) {
+				
+			}
+			return projectTaskRepository.save(updatedTask);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 }
