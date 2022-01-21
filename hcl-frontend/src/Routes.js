@@ -27,7 +27,7 @@ const Routes = () => {
                 <ProjectBoard/>
             </Route>
             <Route exact path="/addProjectTask/:id">
-                <AddProjectTask/>
+                <AddProjectTask history={history}/>
             </Route>
         </div>    
         </>

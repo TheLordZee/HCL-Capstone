@@ -1,9 +1,37 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router';
+import {connect} from "react-redux"
+import classnames from 'classnames';
+import { addProjectTask } from '../../../actions/backlogActions';
+import PropTypes from "prop-types";
 
-const AddProjectTask = () => {
+const AddProjectTask = ({addProjectTask, history}) => {
     const {id} = useParams();
+    
+    const initState = {
+        summary: "",
+        acceptanceCriteria: "",
+        dueDate: "",
+        priority: 0,
+        status: ""
+    }
+
+    const [formData, setFormData] = useState(initState);
+    const [currErrors, setCurrErrors] = useState({});
+    const onChange = e => {
+        const {name, value} = e.target;
+        const updatedForm = {
+            ...formData,
+            [name]:value
+        }
+        setFormData(updatedForm);
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        addProjectTask(id, formData, history)
+    }
     return (
         <div className="add-PBI">
         <div className="container">
@@ -14,19 +42,19 @@ const AddProjectTask = () => {
                     </Link>
                     <h4 className="display-4 text-center">Add  Project Task</h4>
                     <p className="lead text-center">Project Name + Project Code</p>
-                    <form >
+                    <form onSubmit={onSubmit}>
                         <div className="form-group">
-                            <input type="text" className="form-control form-control-lg" name="summary" placeholder="Project Task summary" />
+                            <input type="text" className="form-control form-control-lg" name="summary" placeholder="Project Task summary" value={formData.summary} onChange={onChange}/>
                         </div>
                         <div className="form-group">
-                            <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria"></textarea>
+                            <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria" value={formData.acceptanceCriteria} onChange={onChange}></textarea>
                         </div>
                         <h6>Due Date</h6>
                         <div className="form-group">
-                            <input type="date" className="form-control form-control-lg" name="dueDate" />
+                            <input type="date" className="form-control form-control-lg" name="dueDate" value={formData.dueDate} onChange={onChange}/>
                         </div>
                         <div className="form-group">
-                            <select className="form-control form-control-lg" name="priority">
+                            <select className="form-control form-control-lg" name="priority" value={formData.priority} onChange={onChange}>
                                 <option value={0}>Select Priority</option>
                                 <option value={1}>High</option>
                                 <option value={2}>Medium</option>
@@ -35,7 +63,7 @@ const AddProjectTask = () => {
                         </div>
 
                         <div className="form-group">
-                            <select className="form-control form-control-lg" name="status">
+                            <select className="form-control form-control-lg" name="status" value={formData.status} onChange={onChange}>
                                 <option value="">Select Status</option>
                                 <option value="TO_DO">TO DO</option>
                                 <option value="IN_PROGRESS">IN PROGRESS</option>
@@ -53,4 +81,11 @@ const AddProjectTask = () => {
     )
 }
 
-export default AddProjectTask
+AddProjectTask.propTypes = {
+    addProjectTask: PropTypes.func.isRequired
+}
+
+export default connect(
+    null, 
+    {addProjectTask}
+) (AddProjectTask)
