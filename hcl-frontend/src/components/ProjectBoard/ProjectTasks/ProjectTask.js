@@ -11,7 +11,7 @@ const ProjectTask = () => {
                         <div className="card-body bg-light">
                             <h5 className="card-title">project_task.summary</h5>
                             <p className="card-text text-truncate ">
-                                {/* project_task.acceptanceCriteria */}
+                                project_task.acceptanceCriteria
                             </p>
                             <Link to="#" className="btn btn-primary">
                                 View / Update
