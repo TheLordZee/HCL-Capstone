@@ -15,11 +15,13 @@ const UpdateProjectTask = ({project, updateProjectTask, getProjectTask, history,
     useEffect(() => {
         getProjectTask(backlog_id, pt_id, history);
     }, [])
+
     useEffect(() => {
         if(errors){
             setCurrErrors (errors)
         }
     }, [errors])
+
     useEffect(()=>{
         setFormData(project)
     }, [project])
@@ -37,6 +39,7 @@ const UpdateProjectTask = ({project, updateProjectTask, getProjectTask, history,
         e.preventDefault();
         updateProjectTask(backlog_id, pt_id, formData, history)
     }
+
     return (
         <div className="add-PBI">
         <div className="container">

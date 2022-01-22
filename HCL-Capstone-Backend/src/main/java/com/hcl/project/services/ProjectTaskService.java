@@ -85,7 +85,8 @@ public class ProjectTaskService {
 		if(!updatedTask.getProjectSequence().equals(pt_id)) {
 			throw new ProjectSequenceUpdateException("You are not allowed to change the project sequence!");
 		}
-		return projectTaskRepository.save(updatedTask);
+		pt = updatedTask;
+		return projectTaskRepository.save(pt);
 	}
 	
 	public void deleteProjectTask(String backlog_id, String pt_id) {
