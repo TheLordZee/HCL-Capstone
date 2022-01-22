@@ -5,6 +5,7 @@ const Backlog = ({projectTasks}) => {
     const toDoTasks = projectTasks.filter(pt => pt.status === "TO_DO");
     const inProgressTasks = projectTasks.filter(pt => pt.status === "IN_PROGRESS");
     const completedTasks = projectTasks.filter(pt => pt.status === "DONE");
+    
     return (
     <div>
         <div className="container">
