@@ -12,7 +12,6 @@ const ProjectBoard = ({backlog, getBacklog}) => {
        getBacklog(id); 
     }, [])
     const tasks = backlog.projectTasks;
-    console.log(tasks)
     return (
         <div className="container">
             <Link to={`/addProjectTask/${id}`} className="btn btn-primary mb-3">
@@ -20,7 +19,7 @@ const ProjectBoard = ({backlog, getBacklog}) => {
             </Link>
             <br />
             <hr />
-            <Backlog/>
+            <Backlog projectTasks={tasks}/>
         </div>
     )
 }
