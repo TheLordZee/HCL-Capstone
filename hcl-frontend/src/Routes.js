@@ -7,6 +7,7 @@ import AddProject from './components/project/AddProject';
 import UpdateProject from './components/project/UpdateProject';
 import ProjectBoard from './components/ProjectBoard/ProjectBoard';
 import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTask';
+import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
 
 const Routes = () => {
     const history = useHistory();
@@ -28,6 +29,9 @@ const Routes = () => {
             </Route>
             <Route exact path="/addProjectTask/:id">
                 <AddProjectTask history={history}/>
+            </Route>
+            <Route exact path="/updateProjectTask/:backlog_id/:pt_id">
+                <UpdateProjectTask history={history}/>
             </Route>
         </div>    
         </>

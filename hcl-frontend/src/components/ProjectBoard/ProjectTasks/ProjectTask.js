@@ -2,10 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ProjectTask = ({projectTask}) => {
-    const {projectSequence, priority, summary, acceptanceCriteria} = projectTask;
+    const {projectSequence, priority, summary, acceptanceCriteria, projectIdentifier} = projectTask;
     let priorityString;
     let priorityClass;
-
     switch (priority) {
         case 1:
             priorityClass="bg-danger text-light";
@@ -32,7 +31,7 @@ const ProjectTask = ({projectTask}) => {
                 <p className="card-text text-truncate ">
                     {acceptanceCriteria}
                 </p>
-                <Link to="#" className="btn btn-primary">
+                <Link to={`/updateProjectTask/${projectIdentifier}/${projectSequence}`} className="btn btn-primary">
                     View / Update
                 </Link>
                 <button className="btn btn-danger ml-4">
