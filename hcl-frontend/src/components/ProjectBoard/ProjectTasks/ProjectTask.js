@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { deleteProjectTask } from '../../../actions/backlogActions';
+import PropTypes from "prop-types"
+import {connect} from "react-redux"
 
-const ProjectTask = ({projectTask}) => {
+const ProjectTask = ({projectTask, deleteProjectTask}) => {
     const {projectSequence, priority, summary, acceptanceCriteria, projectIdentifier} = projectTask;
     let priorityString;
     let priorityClass;
@@ -21,6 +24,11 @@ const ProjectTask = ({projectTask}) => {
         default:
             break;
     }
+
+    const onDelete=(backlog_id, pt_id)=>{
+        deleteProjectTask(backlog_id, pt_id);
+    }
+
     return (
         <div className="card mb-1 bg-light">
             <div className={"card-header text-primary " + priorityClass}>
@@ -34,7 +42,7 @@ const ProjectTask = ({projectTask}) => {
                 <Link to={`/updateProjectTask/${projectIdentifier}/${projectSequence}`} className="btn btn-primary">
                     View / Update
                 </Link>
-                <button className="btn btn-danger ml-4">
+                <button className="btn btn-danger ml-4" onClick={()=>onDelete(projectIdentifier, projectSequence)}>
                     Delete
                 </button>
             </div>
@@ -42,4 +50,8 @@ const ProjectTask = ({projectTask}) => {
     )
 }
 
-export default ProjectTask
+ProjectTask.propTypes = {
+    deleteProjectTask: PropTypes.func.isRequired
+}
+
+export default connect(null, {deleteProjectTask}) (ProjectTask)
