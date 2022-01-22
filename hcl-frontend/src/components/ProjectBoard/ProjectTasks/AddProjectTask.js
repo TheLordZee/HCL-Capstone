@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router';
 import {connect} from "react-redux"
@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { addProjectTask } from '../../../actions/backlogActions';
 import PropTypes from "prop-types";
 
-const AddProjectTask = ({addProjectTask, history}) => {
+const AddProjectTask = ({addProjectTask, history, errors}) => {
     const {id} = useParams();
     
     const initState = {
@@ -19,6 +19,12 @@ const AddProjectTask = ({addProjectTask, history}) => {
 
     const [formData, setFormData] = useState(initState);
     const [currErrors, setCurrErrors] = useState({});
+    useEffect(() => {
+        if(errors){
+            setCurrErrors (errors)
+        }
+    }, [errors])
+    
     const onChange = e => {
         const {name, value} = e.target;
         const updatedForm = {
@@ -44,7 +50,16 @@ const AddProjectTask = ({addProjectTask, history}) => {
                     <p className="lead text-center">Project Name + Project Code</p>
                     <form onSubmit={onSubmit}>
                         <div className="form-group">
-                            <input type="text" className="form-control form-control-lg" name="summary" placeholder="Project Task summary" value={formData.summary} onChange={onChange}/>
+                            <input type="text" className={classnames("form-control form-control-lg ",{
+                                    "is-invalid":currErrors.summary
+                            })} 
+                            name="summary" 
+                            placeholder="Project Task summary" 
+                            value={formData.summary} 
+                            onChange={onChange}/>
+                            {currErrors.summary && (
+                                <div className="invalid-feedback">{currErrors.summary}</div>
+                            )}
                         </div>
                         <div className="form-group">
                             <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria" value={formData.acceptanceCriteria} onChange={onChange}></textarea>
@@ -82,10 +97,15 @@ const AddProjectTask = ({addProjectTask, history}) => {
 }
 
 AddProjectTask.propTypes = {
-    addProjectTask: PropTypes.func.isRequired
+    addProjectTask: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
+const mapStateToProps = state => ({
+    errors: state.errors
+})
+
 export default connect(
-    null, 
+    mapStateToProps, 
     {addProjectTask}
 ) (AddProjectTask)
