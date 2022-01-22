@@ -3,8 +3,11 @@ import ProjectTask from './ProjectTasks/ProjectTask'
 
 const Backlog = ({projectTasks}) => {
     const toDoTasks = projectTasks.filter(pt => pt.status === "TO_DO");
+    toDoTasks.sort((p1, p2) => p1.status - p2.status);
     const inProgressTasks = projectTasks.filter(pt => pt.status === "IN_PROGRESS");
+    inProgressTasks.sort((p1, p2) => p1.status - p2.status);
     const completedTasks = projectTasks.filter(pt => pt.status === "DONE");
+    completedTasks.sort((p1, p2) => p1.status - p2.status);
     
     return (
     <div>
