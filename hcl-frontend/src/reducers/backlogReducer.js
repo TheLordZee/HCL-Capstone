@@ -1,4 +1,4 @@
-import { GET_BACKLOG, GET_PROJECT_TASK, DELETE_PROJECT_TASK } from "../actions/types"; 
+import { GET_BACKLOG, GET_PROJECT_TASK, DELETE_PROJECT_TASK, MOVE_PROJECT_TASK } from "../actions/types"; 
 
 const initState = {
     projectTasks: [],
@@ -22,6 +22,11 @@ export default function(state=initState, action){
                 ...state,
                 projectTasks: state.projectTasks.filter(pt => pt.projectSequence !== action.payload)
             }    
+        case MOVE_PROJECT_TASK:
+            return{
+                ...state,
+                projectTasks: action.payload
+            }
         default:
             return state;
     }

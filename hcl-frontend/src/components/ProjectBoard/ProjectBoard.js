@@ -10,7 +10,7 @@ const ProjectBoard = ({backlog, getBacklog, errors}) => {
     const {id} = useParams();
     const tasks = backlog.projectTasks;
     const [currErrors, setCurrErrors] = useState({});
-    
+    const refreshBacklog = async () => await getBacklog(id);
     useEffect(() => {
         getBacklog(id); 
     }, [])
@@ -37,7 +37,7 @@ const ProjectBoard = ({backlog, getBacklog, errors}) => {
             }
         } else {
             return(
-                <Backlog projectTasks={tasks}/>
+                <Backlog projectTasks={tasks} refreshBacklog={refreshBacklog}/>
             )
         }
     }
