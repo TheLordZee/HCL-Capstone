@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcl.project.domain.User;
+import com.hcl.project.exceptions.DuplicateUsernameException;
 import com.hcl.project.repositories.UserRepository;
 
 @Service
@@ -20,7 +21,7 @@ public class UserService {
 			newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 			return userRepository.save(newUser);
 		}catch(Exception E) {
-			return null;
+			throw new DuplicateUsernameException("Username '" + newUser.getUsername() +"' already exists");
 		}
 	}
 }

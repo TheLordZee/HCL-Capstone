@@ -26,4 +26,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
 		ProjectSequenceUpdateExceptionResponse exceptionResponse = new ProjectSequenceUpdateExceptionResponse(ex.getMessage());
 		return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler
+	public final ResponseEntity<Object> handleDuplicateUsernameException(DuplicateUsernameException ex, WebRequest request){
+		DuplicateUsernameResponse exceptionResponse = new DuplicateUsernameResponse(ex.getMessage());
+		return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
 }
