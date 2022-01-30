@@ -19,6 +19,7 @@ public class UserService {
 	public User saveUser(User newUser) {
 		try {
 			newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+			newUser.setConfirmPassword("");
 			return userRepository.save(newUser);
 		}catch(Exception E) {
 			throw new DuplicateUsernameException("Username '" + newUser.getUsername() +"' already exists");
