@@ -36,8 +36,6 @@ public class User implements UserDetails {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	
-	
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
