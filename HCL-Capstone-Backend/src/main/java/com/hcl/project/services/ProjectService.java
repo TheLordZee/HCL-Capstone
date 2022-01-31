@@ -9,6 +9,7 @@ import com.hcl.project.domain.Backlog;
 import com.hcl.project.domain.Project;
 import com.hcl.project.domain.User;
 import com.hcl.project.exceptions.ProjectIdException;
+import com.hcl.project.exceptions.ProjectNotFoundException;
 import com.hcl.project.repositories.BacklogRepository;
 import com.hcl.project.repositories.ProjectRepository;
 import com.hcl.project.repositories.UserRepository;
@@ -26,8 +27,16 @@ public class ProjectService {
 	private UserRepository userRepository;
 	
 	public Project saveOrUpdateProject(Project project, String username) {
-		try {
+		if(project.getId() != null) {
+			Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
 			
+			if(existingProject != null && (!existingProject.getProjectLeader().equals(username))) {
+				throw new ProjectNotFoundException("You Do Not Have Access to Project With ID: '" + project.getProjectIdentifier().toUpperCase() + "'!"); 
+			} else if(existingProject == null) {
+				throw new ProjectNotFoundException("Project With Id: '" + project.getProjectIdentifier() + "' Does Not Exist");
+			}
+		}
+		try {
 			User user = userRepository.findByUsername(username);
 			project.setProjectLeader(user.getUsername());
 			project.setUser(user);
