@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.hcl.project.domain.User;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
 @Component
 public class JwtTokenProvider {
@@ -21,9 +20,8 @@ public class JwtTokenProvider {
 		Date expireDate = new Date(genDate.getTime() + SecurityConstants.EXPIRATION_TIME);
 		
 		String userId = Long.toString(user.getId());	
-		
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("id", userId);
+		claims.put("id", user.getId());
 		claims.put("username", user.getUsername());
 		claims.put("fullName", user.getFullName());
 		
@@ -35,5 +33,30 @@ public class JwtTokenProvider {
 				.signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
 				.compact();
 				
+	}
+	
+	public boolean validateToken(String token) {
+		try {
+			Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token);
+			return true;	
+		} catch (SignatureException ex) {
+			System.out.println("Invalid JWT Signature");
+		}catch (MalformedJwtException ex) {
+		 System.out.println("Invalid JWT Token");
+		}catch (ExpiredJwtException ex) {
+			System.out.println("Expired JWT Token");
+		}catch (UnsupportedJwtException e) {
+			System.out.println("Unsupported JWT Token");
+		}catch (IllegalArgumentException e) {
+			System.out.println("JWT Claims String is Empty");
+		}
+		return false;
+	}
+	
+	public Long getUserIdFromJWT(String token) {
+		Claims claims = Jwts.parser().setSigningKey(SecurityConstants.SECRET).parseClaimsJws(token).getBody();
+		String id = claims.get("id").toString();
+		System.out.println(id);
+		return Long.parseLong(id);
 	}
 }
