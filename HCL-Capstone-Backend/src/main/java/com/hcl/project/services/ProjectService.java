@@ -1,5 +1,7 @@
 package com.hcl.project.services;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,25 +49,26 @@ public class ProjectService {
 		}
 	}
 	
-	public Project findProjectByIdentifier(String projectId) {
+	public Project findProjectByIdentifier(String projectId, String username) {
 		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase()); 
 		
 		if(project == null) {
 			throw new ProjectIdException("Project With ID: '" + projectId.toUpperCase() + "' Does Not Exist!");
 		}
 		
+		if(!project.getProjectLeader().equals(username)) {
+			throw new ProjectIdException("You Do Not Have Access to Project With ID: '" + projectId.toUpperCase() + "'!");
+		}
+		
 		return project;
 	}
 	
-	public Iterable<Project> findAllProjects(){
-		return projectRepository.findAll();
+	public Iterable<Project> findAllProjects(String username){
+		return projectRepository.findByProjectLeader(username);
 	}
 	
-	public void deleteProjectByIdentifier(String projectId) {
-		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
-		if(project == null) {
-			throw new ProjectIdException("Project With ID: '" + projectId.toUpperCase() + "' Does Not Exist");
-		}
+	public void deleteProjectByIdentifier(String projectId, String username) {
+		Project project = findProjectByIdentifier(projectId, username);
 		projectRepository.delete(project);
 	}
 }
