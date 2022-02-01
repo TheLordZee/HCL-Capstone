@@ -3,11 +3,14 @@ import { useHistory } from 'react-router';
 import {Route} from "react-router-dom";
 import Dashboard from './components/Dashboard';
 import Header from './components/layout/Header';
+import Landing from './components/layout/Landing';
 import AddProject from './components/project/AddProject';
 import UpdateProject from './components/project/UpdateProject';
 import ProjectBoard from './components/ProjectBoard/ProjectBoard';
 import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTask';
 import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
+import Login from './components/UserRoutes/Login';
+import Register from './components/UserRoutes/Register';
 
 const Routes = () => {
     const history = useHistory();
@@ -15,6 +18,16 @@ const Routes = () => {
         <>
         <Header/>
         <div>
+            <Route exact path="/">
+                <Landing/>
+            </Route>
+            <Route exact path="/register">
+                <Register/>
+            </Route>
+            <Route exact path="/login">
+                <Login/>
+            </Route>
+            
             <Route exact path="/dashboard">
                 <Dashboard />
             </Route>
