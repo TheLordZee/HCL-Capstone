@@ -11,4 +11,4 @@ export const DELETE_PROJECT_TASK = "DELETE_PROJECT_TASK"
 export const MOVE_PROJECT_TASK = "MOVE_PROJECT_TASK"
 
 //Types for Security Actions
-export const SET_CURRET_USER = "SET_CURRET_USER"
+export const SET_CURRENT_USER = "SET_CURRENT_USER"
