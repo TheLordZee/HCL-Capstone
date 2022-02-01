@@ -5,7 +5,7 @@ const initState = {
     validToken: false
 }
 
-const validatePayload=(payload)=>{
+const validatePayload=payload=>{
     if(payload){
         return true
     }else {
@@ -14,7 +14,7 @@ const validatePayload=(payload)=>{
 }
 
 export default function(state=initState, action){
-    switch (action) {
+    switch (action.type) {
         case SET_CURRENT_USER:
             return {
                 ...state,

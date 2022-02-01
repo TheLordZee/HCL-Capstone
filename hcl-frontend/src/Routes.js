@@ -12,6 +12,7 @@ import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProj
 import Login from './components/UserRoutes/Login';
 import Register from './components/UserRoutes/Register';
 
+
 const Routes = () => {
     const history = useHistory();
     return (

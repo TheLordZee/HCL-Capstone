@@ -28,10 +28,16 @@ const Login = ({login, errors, security, history}) => {
         setFormData(updatedForm);
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         login(formData);
     }
+
+    useEffect(() => {
+        if(security.validToken){
+            history.push("/dashboard");
+        }
+    }, [security])
 
   return (
     <div className="login">

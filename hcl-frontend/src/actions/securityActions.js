@@ -19,7 +19,7 @@ export const createNewUser = (newUser, history)=> async dispatch =>{
     }
 }
 
-export const login = (LoginRequest, history) => async dispatch => {
+export const login = LoginRequest => async dispatch => {
     try {
         const res = await axios.post("/api/users/login", LoginRequest);
         const {token} = res.data;
@@ -29,7 +29,6 @@ export const login = (LoginRequest, history) => async dispatch => {
         setAuthHeader(token);
 
         const decoded = jwt_decode(token);
-
         
         dispatch({
             type: SET_CURRENT_USER,
