@@ -27,6 +27,7 @@ public class ProjectService {
 	private UserRepository userRepository;
 	
 	public Project saveOrUpdateProject(Project project, String username) {
+		
 		if(project.getId() != null) {
 			Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
 			
@@ -36,6 +37,7 @@ public class ProjectService {
 				throw new ProjectNotFoundException("Project With Id: '" + project.getProjectIdentifier() + "' Does Not Exist");
 			}
 		}
+		
 		try {
 			User user = userRepository.findByUsername(username);
 			project.setProjectLeader(user.getUsername());

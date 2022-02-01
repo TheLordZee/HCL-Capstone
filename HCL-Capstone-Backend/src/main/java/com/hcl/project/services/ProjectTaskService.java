@@ -27,9 +27,13 @@ public class ProjectTaskService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask pt) {
-		try {
-			Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+	@Autowired
+	private ProjectService projectService;
+	
+	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask pt, String username) {
+			//Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+			Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
+			
 			pt.setBacklog(backlog);
 			int btSeq = backlog.getPTSequence() + 1;
 			
@@ -48,13 +52,9 @@ public class ProjectTaskService {
 			
 			
 			return projectTaskRepository.save(pt);
-
-		}catch(Exception e) {
-			throw new ProjectNotFoundException("Project with ID: '" + projectIdentifier + "' Does Not Exist!");
-		}
 	}
 
-	public Iterable<ProjectTask> findBackLogById(String id) {
+	public Iterable<ProjectTask> findBacklogById(String id, String username) {
 		// TODO Auto-generated method stub
 		
 		Project project = projectRepository.findByProjectIdentifier(id);
@@ -63,14 +63,24 @@ public class ProjectTaskService {
 			throw new ProjectNotFoundException("Project with ID: '" + id + "' Not Found");
 		}
 		
+		if(!project.getProjectLeader().equals(username)) {
+			throw new ProjectIdException("You Do Not Have Access to Project With ID: '" + project.getProjectIdentifier().toUpperCase() + "'!");
+		}
+		
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
 	}
 	 
-	public ProjectTask findPTbyProjectSequence(String backlog_id, String pt_id) {
+	public ProjectTask findPTbyProjectSequence(String backlog_id, String pt_id, String username) {
 		ProjectTask pt = projectTaskRepository.findByProjectSequence(pt_id);
 		
 		if(pt == null) {
 			throw new ProjectNotFoundException("Project Task With ID: '" + pt_id+"' Not Found");
+		}
+		
+		String owner = pt.getBacklog().getProject().getProjectLeader();
+		
+		if(!owner.equals(username)) {
+			throw new ProjectIdException("You Do Not Have Access to Project With ID: '" + pt.getProjectIdentifier().toUpperCase() + "'!");
 		}
 		
 		if(!pt.getProjectIdentifier().equals(backlog_id)) {
@@ -80,8 +90,8 @@ public class ProjectTaskService {
 		return pt;
 	}
 	
-	public ProjectTask updateProjectTask(ProjectTask updatedTask, String pt_id, String backlog_id) {
-		ProjectTask pt = findPTbyProjectSequence(backlog_id, pt_id);
+	public ProjectTask updateProjectTask(ProjectTask updatedTask, String pt_id, String backlog_id, String username) {
+		ProjectTask pt = findPTbyProjectSequence(backlog_id, pt_id, username);
 		if(!updatedTask.getProjectSequence().equals(pt_id)) {
 			throw new ProjectSequenceUpdateException("You are not allowed to change the project sequence!");
 		}
@@ -89,8 +99,8 @@ public class ProjectTaskService {
 		return projectTaskRepository.save(pt);
 	}
 	
-	public void deleteProjectTask(String backlog_id, String pt_id) {
-		ProjectTask pt = findPTbyProjectSequence(backlog_id, pt_id);
+	public void deleteProjectTask(String backlog_id, String pt_id, String username) {
+		ProjectTask pt = findPTbyProjectSequence(backlog_id, pt_id, username);
 		projectTaskRepository.delete(pt);
 	}
 }
