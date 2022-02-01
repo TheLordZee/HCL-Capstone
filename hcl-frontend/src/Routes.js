@@ -22,10 +22,10 @@ const Routes = () => {
                 <Landing/>
             </Route>
             <Route exact path="/register">
-                <Register/>
+                <Register history={history}/>
             </Route>
             <Route exact path="/login">
-                <Login/>
+                <Login history={history}/>
             </Route>
             
             <Route exact path="/dashboard">
