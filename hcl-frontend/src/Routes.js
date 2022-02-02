@@ -13,6 +13,7 @@ import Login from './components/UserRoutes/Login';
 import Register from './components/UserRoutes/Register';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+import SecuredRoute from './SecuredRoute';
 
 const Routes = ({security}) => {
     const history = useHistory();
@@ -30,24 +31,24 @@ const Routes = ({security}) => {
                 <Login history={history} security={security}/>
             </Route>
             
-            <Route exact path="/dashboard">
+            <SecuredRoute exact path="/dashboard" security={security}>
                 <Dashboard security={security}/>
-            </Route>
-            <Route exact path="/addProject">
-                <AddProject history={history} security={security}/>
-            </Route>
-            <Route exact path="/updateProject/:id">
-                <UpdateProject history={history} security={security}/>
-            </Route>
-            <Route exact path="/projectBoard/:id">
-                <ProjectBoard security={security}/>
-            </Route>
-            <Route exact path="/addProjectTask/:id">
-                <AddProjectTask history={history} security={security}/>
-            </Route>
-            <Route exact path="/updateProjectTask/:backlog_id/:pt_id">
-                <UpdateProjectTask history={history} security={security}/>
-            </Route>
+            </SecuredRoute>
+            <SecuredRoute exact path="/addProject" security={security}>
+                <AddProject history={history}/>
+            </SecuredRoute>
+            <SecuredRoute exact path="/updateProject/:id" security={security}>
+                <UpdateProject history={history}/>
+            </SecuredRoute>
+            <SecuredRoute exact path="/projectBoard/:id" security={security}>
+                <ProjectBoard/>
+            </SecuredRoute>
+            <SecuredRoute exact path="/addProjectTask/:id" security={security}>
+                <AddProjectTask history={history}/>
+            </SecuredRoute>
+            <SecuredRoute exact path="/updateProjectTask/:backlog_id/:pt_id" security={security}>
+                <UpdateProjectTask history={history}/>
+            </SecuredRoute>
         </div>    
         </>
         

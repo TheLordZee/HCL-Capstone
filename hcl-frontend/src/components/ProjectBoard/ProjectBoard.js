@@ -22,10 +22,10 @@ const ProjectBoard = ({backlog, getBacklog, errors}) => {
 
     const boardAlgorithm = (errors, tasks) => {
         if(tasks.length < 1){
-            if(errors.projectNotFound){
+            if(errors.projectNotFound || errors.projectIdentifier){
                 return(
                     <div className="alert alert-danger text-center" role="alert">
-                        {errors.projectNotFound}
+                        {errors.projectNotFound || errors.projectIdentifier}
                     </div>
                 )
             } else {
