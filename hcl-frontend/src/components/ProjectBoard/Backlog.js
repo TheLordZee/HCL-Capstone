@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import ProjectTask from './ProjectTasks/ProjectTask'
+import TaskList from './TaskList';
 
 const Backlog = ({projectTasks, refreshBacklog}) => {
     const [tdTasks, setTdTasks] = useState([]);
@@ -55,14 +56,7 @@ const Backlog = ({projectTasks, refreshBacklog}) => {
                             <h3>TO DO</h3>
                         </div>
                     </div>
-                    {tdTasks.map(pt => { 
-                        return <ProjectTask 
-                                    key={pt.id} 
-                                    projectTask={pt}
-                                    moveTask={(to, task) => moveTask("toDo", to, task)}
-                                    refreshBacklog={refreshBacklog}
-                                />
-                    })}
+                        <TaskList tasks={tdTasks} moveTask={moveTask} refreshBacklog={refreshBacklog} from="toDo"/>
                 </div>
                 <div className="col-md-4">
                     <div className="card text-center mb-2">
@@ -70,14 +64,7 @@ const Backlog = ({projectTasks, refreshBacklog}) => {
                             <h3>In Progress</h3>
                         </div>
                     </div>
-                    {ipTasks.map(pt => { 
-                        return <ProjectTask 
-                                key={pt.id} 
-                                projectTask={pt}
-                                moveTask={(to, task) => moveTask("inProgress", to, task)}
-                                refreshBacklog={refreshBacklog}
-                            />
-                    })}
+                    <TaskList tasks={ipTasks} moveTask={moveTask} refreshBacklog={refreshBacklog} from="inProgress"/>
 
                 </div>
                 <div className="col-md-4">
@@ -86,14 +73,7 @@ const Backlog = ({projectTasks, refreshBacklog}) => {
                             <h3>Done</h3>
                         </div>
                     </div>
-                    {cTasks.map(pt => { 
-                        return <ProjectTask 
-                                key={pt.id} 
-                                projectTask={pt}
-                                moveTask={(to, task) => moveTask("done", to, task)}
-                                refreshBacklog={refreshBacklog}
-                            />
-                    })}
+                    <TaskList tasks={cTasks} moveTask={moveTask} refreshBacklog={refreshBacklog} from="done"/>
                 </div>
             </div>
         </div>
