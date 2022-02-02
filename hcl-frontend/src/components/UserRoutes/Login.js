@@ -10,6 +10,12 @@ const Login = ({login, errors, security, history}) => {
         password: ""
     }
 
+    useEffect(()=>{
+        if(security.validToken){
+            history.push("/dashboard")
+        }
+    }, [])
+
     const [formData, setFormData] = useState(initState);
     const [currErrors, setCurrErrors] = useState({});
 
@@ -86,12 +92,10 @@ const Login = ({login, errors, security, history}) => {
 
 Login.propTypes = {
     login: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired,
-    security: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    security: state.security,
     errors: state.errors
 })
 

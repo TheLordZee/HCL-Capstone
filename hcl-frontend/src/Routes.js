@@ -11,41 +11,42 @@ import AddProjectTask from './components/ProjectBoard/ProjectTasks/AddProjectTas
 import UpdateProjectTask from './components/ProjectBoard/ProjectTasks/UpdateProjectTask';
 import Login from './components/UserRoutes/Login';
 import Register from './components/UserRoutes/Register';
+import { connect } from 'react-redux';
+import PropTypes from "prop-types";
 
-
-const Routes = () => {
+const Routes = ({security}) => {
     const history = useHistory();
     return (
         <>
-        <Header/>
+        <Header security={security}/>
         <div>
             <Route exact path="/">
-                <Landing/>
+                <Landing security={security}/>
             </Route>
             <Route exact path="/register">
-                <Register history={history}/>
+                <Register history={history} security={security}/>
             </Route>
             <Route exact path="/login">
-                <Login history={history}/>
+                <Login history={history} security={security}/>
             </Route>
             
             <Route exact path="/dashboard">
-                <Dashboard />
+                <Dashboard security={security}/>
             </Route>
             <Route exact path="/addProject">
-                <AddProject history={history}/>
+                <AddProject history={history} security={security}/>
             </Route>
             <Route exact path="/updateProject/:id">
-                <UpdateProject history={history}/>
+                <UpdateProject history={history} security={security}/>
             </Route>
             <Route exact path="/projectBoard/:id">
-                <ProjectBoard/>
+                <ProjectBoard security={security}/>
             </Route>
             <Route exact path="/addProjectTask/:id">
-                <AddProjectTask history={history}/>
+                <AddProjectTask history={history} security={security}/>
             </Route>
             <Route exact path="/updateProjectTask/:backlog_id/:pt_id">
-                <UpdateProjectTask history={history}/>
+                <UpdateProjectTask history={history} security={security}/>
             </Route>
         </div>    
         </>
@@ -53,4 +54,12 @@ const Routes = () => {
     )
 }
 
-export default Routes;
+Routes.propTypes = {
+    security: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    security: state.security
+})
+
+export default connect(mapStateToProps, {})(Routes);

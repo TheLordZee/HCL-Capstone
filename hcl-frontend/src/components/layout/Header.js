@@ -46,7 +46,7 @@ const Header = ({logout, security}) => {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" onClick={signout}>
+                    <Link className="nav-link" onClick={signout} to="#">
                         Logout
                     </Link>
                 </li>
@@ -77,8 +77,4 @@ Header.propTypes = {
     security: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({
-    security: state.security
-})
-
-export default connect(mapStateToProps, {logout})(Header);
+export default connect(null, {logout})(Header);

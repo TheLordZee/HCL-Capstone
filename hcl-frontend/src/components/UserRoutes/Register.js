@@ -4,7 +4,12 @@ import { createNewUser } from '../../actions/securityActions';
 import PropTypes from "prop-types";
 import classnames from 'classnames';
 
-const Register = ({createNewUser, errors, history}) => {
+const Register = ({createNewUser, errors, history, security}) => {
+    useEffect(()=>{
+        if(security.validToken){
+            history.push("/dashboard")
+        }
+    }, [])
     const initState = {
         username: "",
         fullName: "",
@@ -113,7 +118,8 @@ const Register = ({createNewUser, errors, history}) => {
 
 Register.propTypes = {
     createNewUser: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
